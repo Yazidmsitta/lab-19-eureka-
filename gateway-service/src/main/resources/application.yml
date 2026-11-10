@@ -1,0 +1,26 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: r-clients
+          uri: lb://SERVICE-CLIENT
+          predicates:
+            - Path=/clients/**
+        - id: r-voitures
+          uri: lb://SERVICE-VOITURE
+          predicates:
+            - Path=/voitures/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
